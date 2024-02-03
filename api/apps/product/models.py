@@ -23,7 +23,7 @@ class Product(BaseModel):
     description = models.TextField()
     price = models.DecimalField(decimal_places=2, max_digits=20)
     deleted = models.BooleanField(default=True)
-    discountPercentage = models.DecimalField(decimal_places=2, max_digits=3, default=0.00)
+    discountPercentage = models.DecimalField(decimal_places=2, max_digits=4, default=0.00)
     rating = models.IntegerField(default=0 )
     stock = models.IntegerField(default=0)
    
