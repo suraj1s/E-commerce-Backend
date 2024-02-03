@@ -24,7 +24,7 @@ class Product(BaseModel):
     price = models.DecimalField(decimal_places=2, max_digits=20)
     deleted = models.BooleanField(default=True)
     discountPercentage = models.DecimalField(decimal_places=2, max_digits=3, default=0.00)
-    rating = models.IntegerField(default=0 , max_value=5)
+    rating = models.IntegerField(default=0 )
     stock = models.IntegerField(default=0)
    
     brand = models.ForeignKey("Brand", on_delete=models.CASCADE)
