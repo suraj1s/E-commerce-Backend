@@ -2,6 +2,7 @@ from django.db import models
 import uuid
 
 
+
 # class Status(models.TextChoices):
 #     ACTIVE = "active", "Active"
 #     INACTIVE = "inactive", "InActive"

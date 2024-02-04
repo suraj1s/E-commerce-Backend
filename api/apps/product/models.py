@@ -1,5 +1,6 @@
 from django.db import models
 from api.apps.common.models import BaseModel
+import uuid
 
 sizes = (
     ('S', 'Small'),
@@ -21,16 +22,15 @@ color = (
 class Product(BaseModel):
     title = models.CharField(max_length=120)
     description = models.TextField()
-    price = models.DecimalField(decimal_places=2, max_digits=20)
-    deleted = models.BooleanField(default=True)
-    discountPercentage = models.DecimalField(decimal_places=2, max_digits=4, default=0.00)
-    rating = models.IntegerField(default=0 )
+    price = models.DecimalField(default=99.99 , max_digits=10, decimal_places=2)
+    discountPercentage = models.DecimalField(default=0 , max_digits=4, decimal_places=2)
+    rating = models.DecimalField(default=0  , max_digits=4, decimal_places=2)
+    deleted = models.BooleanField(default=False)
     stock = models.IntegerField(default=0)
-   
-    brand = models.ForeignKey("Brand", on_delete=models.CASCADE)
-    category = models.ForeignKey("Category", on_delete=models.CASCADE)
-    # thumbnail = models.ImageField(upload_to="products/thumbnails", null=True, blank=True)
-    # images = models.ImageField(upload_to="products/images", null=True, blank=True)
+    brand = models.CharField(max_length=120)
+    category = models.CharField(max_length=120)
+    thumbnail = models.URLField(max_length=500 , null=True, blank=True)
+    images = models.ManyToManyField("Image", blank=True  ) 
     color = models.CharField(max_length=120, choices=color, null= True, blank=True)
     size = models.CharField(max_length=120, choices=sizes ,null= True, blank=True)
 
@@ -38,20 +38,6 @@ class Product(BaseModel):
         return self.title
 
 
-
-class Brand(BaseModel):
-    name = models.CharField(max_length=120)
-    lable = models.CharField(max_length=120)
-    description = models.TextField()
-    
-
-    def __str__(self):
-        return self.name
-
-class Category(BaseModel):
-    name = models.CharField(max_length=120)
-    lable = models.CharField(max_length=120)
-    description = models.TextField()
-   
-    def __str__(self):
-        return self.name
+class Image(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    image_url = models.URLField(max_length=500 , blank=True , null=True , default="https://via.placeholder.com/150")
