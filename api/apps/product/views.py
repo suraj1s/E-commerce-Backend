@@ -8,22 +8,6 @@ class ProductListAPIView(generics.ListAPIView):
     serializer_class = ProductSerializer
 
 
-# class ProductCreateAPIView(generics.CreateAPIView):
-#     queryset = Product.objects.all()
-#     serializer_class = ProductCreateSerializer
-
-#     def create(self, request, *args, **kwargs):
-#         for data in request.data:
-#             print(data)
-#             serializer = self.get_serializer(data=data)
-#             serializer.is_valid(raise_exception=True)
-#             self.perform_create(serializer)
-#             return super().create(request, *args, **kwargs)
-            
-#         # If the request data is a list, set many=True for the serializer
-#         # many = isinstance(request.data, list)
-        
-
 class ProductCreateAPIView(generics.CreateAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductCreateSerializer
