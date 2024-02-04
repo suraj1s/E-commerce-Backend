@@ -24,7 +24,7 @@ class ProductCreateSerializer(serializers.ModelSerializer):
             for data in validated_data:
                 created_products.append(Product.objects.create(**data))
             
-            return created_products
+            return " created succesfully "
         else:
             # If it's not a list, create a single Product
             return Product.objects.create(**validated_data)
