@@ -26,11 +26,10 @@ class Product(BaseModel):
     discountPercentage = models.DecimalField(decimal_places=2, max_digits=4, default=0.00)
     rating = models.IntegerField(default=0 )
     stock = models.IntegerField(default=0)
-   
     brand = models.ForeignKey("Brand", on_delete=models.CASCADE)
     category = models.ForeignKey("Category", on_delete=models.CASCADE)
-    # thumbnail = models.ImageField(upload_to="products/thumbnails", null=True, blank=True)
-    # images = models.ImageField(upload_to="products/images", null=True, blank=True)
+    thumbnail_url = models.URLField(max_length=500 , null=True, blank=True)
+    images = models.ManyToManyField("Image", blank=True , null=True) 
     color = models.CharField(max_length=120, choices=color, null= True, blank=True)
     size = models.CharField(max_length=120, choices=sizes ,null= True, blank=True)
 
@@ -38,7 +37,10 @@ class Product(BaseModel):
         return self.title
 
 
+class Image(models.Model):
+    image_url = models.URLField(max_length=500 , null=True, blank=True)
 
+   
 class Brand(BaseModel):
     name = models.CharField(max_length=120)
     lable = models.CharField(max_length=120)
