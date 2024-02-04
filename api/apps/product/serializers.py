@@ -1,12 +1,17 @@
 from rest_framework import serializers
 from .models import Product , Image 
  
+class ImageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Image
+        fields = ['image_url']
+
 class ProductSerializer(serializers.ModelSerializer):
+    images = ImageSerializer(many=True, read_only=True)
     class Meta:
         model = Product
         fields = '__all__'
         read_only_fields = ('id', 'created_at', 'updated_at')
-
 
 class ProductCreateSerializer(serializers.ModelSerializer):
     images = serializers.ListField(write_only=True, required=False, allow_empty=True)

@@ -29,7 +29,7 @@ class Product(BaseModel):
     stock = models.IntegerField(default=0)
     brand = models.CharField(max_length=120)
     category = models.CharField(max_length=120)
-    thumbnail_url = models.URLField(max_length=500 , null=True, blank=True)
+    thumbnail = models.URLField(max_length=500 , null=True, blank=True)
     images = models.ManyToManyField("Image", blank=True  ) 
     color = models.CharField(max_length=120, choices=color, null= True, blank=True)
     size = models.CharField(max_length=120, choices=sizes ,null= True, blank=True)
