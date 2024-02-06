@@ -5,10 +5,12 @@ from .views import (
     ProductRetrieveAPIView,
     ProductUpdateAPIView,
     ProductDeleteAPIView,
+    ProductSearchListAPIView,
 )
 
 urlpatterns = [
     path("",ProductListAPIView.as_view(), name="product-list-api-endpoint"),
+    path("search/",ProductSearchListAPIView.as_view(), name="product-list-api-endpoint"),
     path("create/",ProductCreateAPIView.as_view(), name="product-create-api-endpoint"),
     path(
         "<uuid:pk>/",
