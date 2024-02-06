@@ -7,9 +7,21 @@ from django.db.models import Q
 
 
 class ProductListAPIView(generics.ListAPIView):
-    queryset = Product.objects.all()
     serializer_class = ProductSerializer
-    filterset_class = ProductFilter
+    # queryset = Product.objects.all()
+    # filterset_class = ProductFilter
+    
+    def get_queryset(self):
+        search_value = self.request.query_params.get('search', '')
+        queryset = Product.objects.all()
+        # print(search_value , "search value")
+        # print(queryset , "queryset")
+        if search_value:
+            queryset = queryset.filter(
+                Q(title__icontains=search_value) |
+                Q(description__icontains=search_value)
+            )
+        return queryset
 
 class ProductSearchListAPIView(generics.ListAPIView):
     serializer_class = ProductSearchSerializer
@@ -17,8 +29,8 @@ class ProductSearchListAPIView(generics.ListAPIView):
     def get_queryset(self):
         search_value = self.request.query_params.get('search', '')
         queryset = Product.objects.all()
-        print(search_value , "search value")
-        print(queryset , "queryset")
+        # print(search_value , "search value")
+        # print(queryset , "queryset")
         if search_value:
             queryset = queryset.filter(
                 Q(title__icontains=search_value) |
