@@ -23,6 +23,7 @@ urlpatterns = [
         path('v1/', include([
             # path("auth/", include('api.apps.auth.urls')),
             path("product/", include('api.apps.product.urls')),
+            path("cart/", include('api.apps.cart.urls')),
            
         ]))
     ]))

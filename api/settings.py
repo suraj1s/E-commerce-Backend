@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     # apps 
     # "api.apps.auth",
     "api.apps.product",
+    "api.apps.cart",
 
 ]
 
