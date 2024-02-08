@@ -16,6 +16,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+AUTH_USER_MODEL = "authentication.CustomUser"
+
 
 # Application definition
 
@@ -31,8 +33,9 @@ INSTALLED_APPS = [
      'drf_spectacular',
      "corsheaders",
      "django_filters",
+     'rest_framework_simplejwt',
     # apps 
-    # "api.apps.auth",
+    "api.apps.auth",
     "api.apps.product",
     "api.apps.cart",
 
@@ -126,6 +129,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # restframework configuration
 REST_FRAMEWORK = {
+     'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.LimitOffsetPagination",
     "PAGE_SIZE": 10,
