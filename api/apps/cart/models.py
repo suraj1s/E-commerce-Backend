@@ -1,8 +1,11 @@
 from django.db import models
 from api.apps.common.models import BaseModel
+from api.apps.product.models import Product
+from django.contrib.auth.models import User
+
 class Cart(BaseModel):
-    user = models.ForeignKey('users.User', on_delete=models.CASCADE)
-    product = models.ForeignKey('product.Product', on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(default=1)
    
     class Meta:
