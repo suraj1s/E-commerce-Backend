@@ -12,6 +12,8 @@ class CartCreateAPIView(generics.CreateAPIView):
     serializer_class = CartSerializer
 
     def perform_create(self, serializer):
+        # print(self.request.user.id)
+        # print(self.request.user)
         serializer.save(user=self.request.user)
 
 class CartRetrieveAPIView(generics.RetrieveAPIView):

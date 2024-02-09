@@ -15,9 +15,7 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     def get_token(cls, user):
         token = super().get_token(user)
 
-        # Add custom claims
         token['username'] = user.username
-        # ...
 
         return token
 class MyTokenObtainPairView(MyTokenObtainPairSerializer):
@@ -27,23 +25,23 @@ class MyTokenObtainPairView(MyTokenObtainPairSerializer):
 class UserListAPIView(generics.ListAPIView):
     queryset = CustomUser.objects.all()
     serializer_class = CustomUserSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    # permission_classes = [permissions.IsAuthenticated]
     
 class UserCreateAPIView(generics.CreateAPIView):
     queryset = CustomUser.objects.all()
     serializer_class = CustomUserSerializer
-    permission_classes = [permissions.AllowAny]
+    # permission_classes = [permissions.AllowAny]
 
 class UserDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = CustomUser.objects.all()
     serializer_class = CustomUserSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    # permission_classes = [permissions.IsAuthenticated]
 
 
 class UserUpdateAPIView(generics.UpdateAPIView):
     queryset = CustomUser.objects.all()
     serializer_class = CustomUserSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    # permission_classes = [permissions.IsAuthenticated]
 
     def update(self, request, *args, **kwargs):
         partial = kwargs.pop('partial', False)
@@ -59,7 +57,7 @@ class UserUpdateAPIView(generics.UpdateAPIView):
 class UserDeleteAPIView(generics.DestroyAPIView):
     queryset = CustomUser.objects.all()
     serializer_class = CustomUserSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    # permission_classes = [permissions.IsAuthenticated]
 
     def destroy(self, request, *args, **kwargs):
         instance = self.get_object()
@@ -90,7 +88,7 @@ class UserLoginAPIView(APIView):
         return Response({'detail': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
 
 class UserLogoutAPIView(APIView):
-    permission_classes = [permissions.IsAuthenticated]
+    # permission_classes = [permissions.IsAuthenticated]
 
     def post(self, request, *args, **kwargs):
         try:

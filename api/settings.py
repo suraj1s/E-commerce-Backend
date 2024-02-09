@@ -139,7 +139,7 @@ REST_FRAMEWORK = {
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.LimitOffsetPagination",
     "PAGE_SIZE": 10,
     "DEFAULT_PERMISSION_CLASSES": [
-        # "rest_framework.permissions.IsAuthenticated",
+        "rest_framework.permissions.IsAuthenticated",
         # "api.apps.auth.permissions.CanAccessResource"
     ],
     'DEFAULT_FILTER_BACKENDS': (
@@ -184,8 +184,8 @@ CORS_ALLOWED_ORIGINS = ["http://localhost:8000", "http://localhost:3000"]
 # # JWT Configuration
 
 SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=5),
-    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
+    "ACCESS_TOKEN_LIFETIME": timedelta(days=5),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=10),
     "ROTATE_REFRESH_TOKENS": False,
     "BLACKLIST_AFTER_ROTATION": False,
     "UPDATE_LAST_LOGIN": False,
