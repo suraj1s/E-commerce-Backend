@@ -4,6 +4,24 @@ from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
 from .models import CustomUser
 from .serializers import CustomUserSerializer
+from django.contrib.auth import authenticate
+
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from rest_framework_simplejwt.views import TokenObtainPairView
+
+# this is token claims customization 
+class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
+    @classmethod
+    def get_token(cls, user):
+        token = super().get_token(user)
+
+        # Add custom claims
+        token['username'] = user.username
+        # ...
+
+        return token
+class MyTokenObtainPairView(MyTokenObtainPairSerializer):
+    serializer_class = MyTokenObtainPairSerializer
 
 
 class UserListAPIView(generics.ListAPIView):
@@ -61,7 +79,13 @@ class UserLoginAPIView(APIView):
         if user:
             refresh = RefreshToken.for_user(user)
             access_token = str(refresh.access_token)
-            return Response({'access_token': access_token}, status=status.HTTP_200_OK)
+            refresh_token = str(refresh)
+            response_data = {
+                'access_token': access_token,
+                'refresh_token': refresh_token,
+            }
+            return Response(response_data, status=status.HTTP_200_OK)
+
 
         return Response({'detail': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
 
