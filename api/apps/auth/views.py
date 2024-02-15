@@ -32,7 +32,7 @@ class UserCreateAPIView(generics.CreateAPIView):
     serializer_class = CustomUserSerializer
     # permission_classes = [permissions.AllowAny]
 
-class UserDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
+class UserDetailAPIView(generics.RetrieveAPIView):
     queryset = CustomUser.objects.all()
     serializer_class = CustomUserSerializer
     # permission_classes = [permissions.IsAuthenticated]
