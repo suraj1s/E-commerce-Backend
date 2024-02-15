@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     "api.apps.auth",
     "api.apps.product",
     "api.apps.cart",
+    "api.apps.checkout",
+    
 
 ]
 
