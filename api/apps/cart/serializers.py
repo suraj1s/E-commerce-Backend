@@ -2,18 +2,23 @@ from rest_framework import serializers
 from .models import Cart
 
 class CartSerializer(serializers.ModelSerializer):
-    # user = serializzers.StringRelatedField()
+    user = serializzers.StringRelatedField()
+    product = serializers.SerializerMethodField()
+    class Meta:
+        model = Cart
+        fields = "__all__"
+        
+    def get_user(self, obj):
+        request = self.context.get('request')
+        return request.user
+
+
+class CartGetSerializer(serializers.ModelSerializer):
     product = serializers.SerializerMethodField()
     class Meta:
         model = Cart
         fields = [ "id" , "product" , "quantity" ]
         
-
-
-    def get_user(self, obj):
-        request = self.context.get('request')
-        return request.user
-
     def get_product(self, obj):
         product = {
             'id': obj.product.id,
