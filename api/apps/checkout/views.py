@@ -13,6 +13,8 @@ class CheckoutCreateAPIView(generics.CreateAPIView):
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
 
+
+
 class CheckoutListAPIView(generics.ListAPIView):
     serializer_class = CheckoutSerializer
     queryset = Checkout.objects.all()
