@@ -1,14 +1,14 @@
 from django.shortcuts import render
 from rest_framework import generics
 from .models import Checkout, Address
-from .serializers import CheckoutSerializer, AddressSerializer
+from .serializers import CheckoutSerializer, AddressSerializer, CheckoutCreateSerializer
 
 
 
 
 class CheckoutCreateAPIView(generics.CreateAPIView):
     queryset = Checkout.objects.all()
-    serializer_class = CheckoutSerializer
+    serializer_class = CheckoutCreateSerializer
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
