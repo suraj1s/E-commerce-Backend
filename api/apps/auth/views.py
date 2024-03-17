@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
 from .models import CustomUser
-from .serializers import CustomUserSerializer
+from .serializers import CustomUserSerializer, UserCreateSerializer
 from django.contrib.auth import authenticate
 
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
@@ -27,10 +27,11 @@ class UserListAPIView(generics.ListAPIView):
     serializer_class = CustomUserSerializer
     # permission_classes = [permissions.IsAuthenticated]
     
+
 class UserCreateAPIView(generics.CreateAPIView):
     queryset = CustomUser.objects.all()
-    serializer_class = CustomUserSerializer
-    # permission_classes = [permissions.AllowAny]
+    serializer_class = UserCreateSerializer
+    permission_classes = [permissions.AllowAny]
 
 class UserDetailAPIView(generics.RetrieveAPIView):
     queryset = CustomUser.objects.all()
