@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.urls import path, include
-# from django.conf import settings
-# from django.conf.urls.static import static
+from django.conf import settings
+from django.conf.urls.static import static
 from drf_spectacular.views import (
     SpectacularAPIView,
     SpectacularSwaggerView,
@@ -24,11 +24,14 @@ urlpatterns = [
             path("auth/", include('api.apps.auth.urls')),
             path("product/", include('api.apps.product.urls')),
             path("cart/", include('api.apps.cart.urls')),
+            path("checkout/", include('api.apps.checkout.urls')),
+            path("orders/", include('api.apps.orders.urls')),
+            path("payment/", include('api.apps.payment.urls')),
            
         ]))
     ]))
 ]
 
-# urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-# urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
