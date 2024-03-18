@@ -5,7 +5,7 @@ from .serializers import CartSerializer, CartGetSerializer
 
 class CartListAPIView(generics.ListAPIView):
     serializer_class = CartGetSerializer
-    queryset = Cart.objects.filter(status='pending')
+    queryset = Cart.objects.all()
     
 class CartCreateAPIView(generics.CreateAPIView):
     queryset = Cart.objects.all()

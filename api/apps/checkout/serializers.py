@@ -1,8 +1,7 @@
 
 from rest_framework import serializers
-from .models import Checkout, Address, Payment, PaymentOptions
+from .models import Checkout, Address, Payment, PaymentOptions, CheckoutItems
 from api.apps.cart.models import Cart
-
 
 # here we change the status of the payment to completed and cart to CHECKEDOUT
 
@@ -29,27 +28,28 @@ class CheckoutCreateSerializer(serializers.ModelSerializer):
     user = serializers.HiddenField(
         default=serializers.CurrentUserDefault()
     )
-    items = serializers.PrimaryKeyRelatedField(many=True, queryset=Cart.objects.all())
+    checkout_items = serializers.ListField(write_only=True, required=False)
+
     class Meta:
         model = Checkout
-        fields = [ "id", "items", "address", "payment", "user"]
+        fields = ["id", "checkout_items", "address", "payment", "user"]
 
     def create(self, validated_data):
-        items = validated_data.pop('items')
+        checkout_items_data = validated_data.pop('checkout_items', None)
         checkout = Checkout.objects.create(**validated_data)
-        print(checkout, "checkout items")
-        print(items, "items")
-        for item in items:
-            print(item, "item")     
-
+        
+        if checkout_items_data:
+            for cart_id in checkout_items_data:
+                cart = Cart.objects.get(id=cart_id)
+                checkout_item = CheckoutItems.objects.create(
+                    product=cart.product,
+                    quantity=cart.quantity
+                )
+                checkout.checkout_items.add(checkout_item)
+                cart.delete()
+        
         return checkout
 
-# class CheckoutCreateAPIView(generics.CreateAPIView):
-#     queryset = Checkout.objects.all()
-#     serializer_class = CheckoutCreateSerializer
-
-#     def perform_create(self, serializer):
-#         serializer.save(user=self.request.user)
 class CheckoutSerializer(serializers.ModelSerializer):
     user = serializers.HiddenField(
         default=serializers.CurrentUserDefault()
