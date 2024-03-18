@@ -15,20 +15,20 @@ from .views import (
 )
 
 urlpatterns = [
-    path("checkout/",CheckoutListAPIView.as_view(), name="checkout-list-api-endpoint"),
-    path("checkout/create/",CheckoutCreateAPIView.as_view(), name="checkout-create-api-endpoint"),
+    path("",CheckoutListAPIView.as_view(), name="checkout-list-api-endpoint"),
+    path("create/",CheckoutCreateAPIView.as_view(), name="checkout-create-api-endpoint"),
     path(
-        "checkout/<uuid:pk>/",
+        "<uuid:pk>/",
         CheckoutRetrieveAPIView.as_view(),
         name="checkout-retrieve-api-endpoint",
     ),
     path(
-        "checkout/<uuid:pk>/update/",
+        "<uuid:pk>/update/",
         CheckoutUpdateAPIView.as_view(),
         name="checkout-update-api-endpoint",
     ),
     path(
-        "checkout/<uuid:pk>/delete/",
+        "<uuid:pk>/delete/",
         CheckoutDeleteAPIView.as_view(),
         name="checkout-delete-api-endpoint",
     ),

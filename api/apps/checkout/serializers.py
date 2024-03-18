@@ -26,13 +26,12 @@ class CheckoutCreateSerializer(serializers.ModelSerializer):
                 )
                 checkout.checkout_items.add(checkout_item)
                 cart.delete()
-        # at this point create a order with orderstatus as pending
+        # at this point create a order with orderstatus as checkedout
         order = Order.objects.create(
             user=validated_data['user'],
-            order_status='pending'
+            order_status='checkedout',
+            order_detail=checkout
         )
-        order.order_detail = checkout
-        order.save()
         return checkout
 
 class CheckoutSerializer(serializers.ModelSerializer):
