@@ -11,7 +11,6 @@ class CartSerializer(serializers.ModelSerializer):
         request = self.context.get('request')
         return request.user
 
-
 class CartGetSerializer(serializers.ModelSerializer):
     product = serializers.SerializerMethodField()
     class Meta:
@@ -19,11 +18,11 @@ class CartGetSerializer(serializers.ModelSerializer):
         fields = [ "id" , "product" , "quantity" ]
         
     def get_product(self, obj):
-        product = {
+        products = [{
             'id': obj.product.id,
             'title': obj.product.title,
             'price': obj.product.price,
             'discount': obj.product.discountPercentage,
             'thumbnail': obj.product.thumbnail,
-            }
-        return product
+            }]
+        return products
