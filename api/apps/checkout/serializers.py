@@ -1,6 +1,7 @@
 
 from rest_framework import serializers
 from .models import Checkout, Address, Payment, PaymentOptions
+from api.apps.cart.models import Cart
 
 
 # here we change the status of the payment to completed and cart to CHECKEDOUT
@@ -28,19 +29,27 @@ class CheckoutCreateSerializer(serializers.ModelSerializer):
     user = serializers.HiddenField(
         default=serializers.CurrentUserDefault()
     )
+    items = serializers.PrimaryKeyRelatedField(many=True, queryset=Cart.objects.all())
     class Meta:
         model = Checkout
         fields = [ "id", "items", "address", "payment", "user"]
 
     def create(self, validated_data):
+        items = validated_data.pop('items')
         checkout = Checkout.objects.create(**validated_data)
-        for cart in checkout.items.all():
-            cart.status = 'CHECKEDOUT'
-            cart.save()
-        checkout.payment.payment_status = 'completed'
-        checkout.payment.save()
+        print(checkout, "checkout items")
+        print(items, "items")
+        for item in items:
+            print(item, "item")     
+
         return checkout
-        
+
+# class CheckoutCreateAPIView(generics.CreateAPIView):
+#     queryset = Checkout.objects.all()
+#     serializer_class = CheckoutCreateSerializer
+
+#     def perform_create(self, serializer):
+#         serializer.save(user=self.request.user)
 class CheckoutSerializer(serializers.ModelSerializer):
     user = serializers.HiddenField(
         default=serializers.CurrentUserDefault()
@@ -78,6 +87,16 @@ class PaymentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Payment
         fields = "__all__"
+
+    # check if the payment method is cash on delivery
+    # if it is then set the payment status to Incomplete
+    def create(self, validated_data):
+        payment = Payment.objects.create(**validated_data)
+        if payment.payment_method == 'cash on delivery':
+            payment.payment_status = 'incomplete'
+            payment.payment_date = None
+            payment.save()
+        return payment
 
 class PaymentOptionsSerializer(serializers.ModelSerializer):
     class Meta:
