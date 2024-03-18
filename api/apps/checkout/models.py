@@ -4,7 +4,7 @@ from api.apps.common.models import BaseModel
 from api.apps.auth.models import CustomUser as User
 from api.apps.cart.models import Cart
 from api.apps.product.models import Product
-from api.apps.orders.models import  Payment
+from api.apps.payment.models import  Payment
 
 
 class Address(BaseModel):

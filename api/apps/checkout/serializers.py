@@ -1,6 +1,8 @@
 from rest_framework import serializers
 from .models import Checkout, Address, CheckoutItems
 from api.apps.cart.models import Cart
+from api.apps.orders.models import Order
+
 class CheckoutCreateSerializer(serializers.ModelSerializer):
     user = serializers.HiddenField(
         default=serializers.CurrentUserDefault()
@@ -24,7 +26,13 @@ class CheckoutCreateSerializer(serializers.ModelSerializer):
                 )
                 checkout.checkout_items.add(checkout_item)
                 cart.delete()
-        
+        # at this point create a order with orderstatus as pending
+        order = Order.objects.create(
+            user=validated_data['user'],
+            order_status='pending'
+        )
+        order.order_detail = checkout
+        order.save()
         return checkout
 
 class CheckoutSerializer(serializers.ModelSerializer):

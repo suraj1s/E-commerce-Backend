@@ -1,13 +1,28 @@
 from django.urls import path
 from .views import (
-    PaymentListAPIView,
-    PaymentCreateAPIView,
-    PaymentOptionsListAPIView,
+    OrderListAPIView,
+    OrderCreateAPIView,
+    OrderRetrieveAPIView,
+    OrderUpdateAPIView,
+    OrderDeleteAPIView,
 )
-
 urlpatterns = [
-    path("payment/",PaymentListAPIView.as_view(), name="payment-list-api-endpoint"),
-    path("payment/create/",PaymentCreateAPIView.as_view(), name="payment-create-api-endpoint"),
-    path("payment_options/",PaymentOptionsListAPIView.as_view(), name="payment-options-list-api-endpoint"),
-    
+   path("",OrderListAPIView.as_view(), name="order-list-api-endpoint"),
+    path("create/",OrderCreateAPIView.as_view(), name="order-create-api-endpoint"),
+    path(
+        "<uuid:pk>/",
+        OrderRetrieveAPIView.as_view(),
+        name="order-retrieve-api-endpoint",
+    ),
+    path(
+        "<uuid:pk>/update/",
+        OrderUpdateAPIView.as_view(),
+        name="order-update-api-endpoint",
+    ),
+    path(
+        "<uuid:pk>/delete/",
+        OrderDeleteAPIView.as_view(),
+        name="order-delete-api-endpoint",
+    ),
+
 ]

@@ -1,20 +1,27 @@
 from django.shortcuts import render
 from rest_framework import generics
-from .models import Payment, PaymentOptions
-from .serializers import PaymentSerializer, PaymentOptionsSerializer
+from .models import Order
+from .serializers import OrderSerializer
 
+class OrderListAPIView(generics.ListAPIView):
+    serializer_class = OrderSerializer
+    queryset = Order.objects.all()
 
-class PaymentListAPIView(generics.ListAPIView):
-    serializer_class = PaymentSerializer
-    queryset = Payment.objects.all()
-
-class PaymentCreateAPIView(generics.CreateAPIView):
-    queryset = Payment.objects.all()
-    serializer_class = PaymentSerializer
+class OrderCreateAPIView(generics.CreateAPIView):
+    queryset = Order.objects.all()
+    serializer_class = OrderSerializer
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
-class PaymentOptionsListAPIView(generics.ListAPIView):
-    serializer_class = PaymentOptionsSerializer
-    queryset = PaymentOptions.objects.all()
 
+class OrderRetrieveAPIView(generics.RetrieveAPIView):
+    queryset = Order.objects.all()
+    serializer_class = OrderSerializer
+
+class OrderUpdateAPIView(generics.UpdateAPIView):
+    queryset = Order.objects.all()
+    serializer_class = OrderSerializer
+
+class OrderDeleteAPIView(generics.DestroyAPIView):
+    queryset = Order.objects.all()
+    serializer_class = OrderSerializer

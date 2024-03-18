@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     "api.apps.cart",
     "api.apps.checkout",
     "api.apps.orders",
+    "api.apps.payment",
     
 
 ]
