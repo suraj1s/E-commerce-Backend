@@ -1,9 +1,8 @@
 
 from django.shortcuts import render
 from rest_framework import generics
-from .models import Checkout, Address, Payment, PaymentOptions
-from .serializers import CheckoutSerializer, AddressSerializer, CheckoutCreateSerializer, PaymentSerializer, PaymentOptionsSerializer
-
+from .models import Checkout, Address
+from .serializers import CheckoutSerializer, AddressSerializer, CheckoutCreateSerializer
 
 class CheckoutCreateAPIView(generics.CreateAPIView):
     queryset = Checkout.objects.all()
@@ -50,18 +49,3 @@ class AddressUpdateAPIView(generics.UpdateAPIView):
 class AddressDeleteAPIView(generics.DestroyAPIView):
     queryset = Address.objects.all()
     serializer_class = AddressSerializer
-
-class PaymentListAPIView(generics.ListAPIView):
-    serializer_class = PaymentSerializer
-    queryset = Payment.objects.all()
-
-class PaymentCreateAPIView(generics.CreateAPIView):
-    queryset = Payment.objects.all()
-    serializer_class = PaymentSerializer
-
-    def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
-class PaymentOptionsListAPIView(generics.ListAPIView):
-    serializer_class = PaymentOptionsSerializer
-    queryset = PaymentOptions.objects.all()
-

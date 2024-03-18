@@ -10,9 +10,7 @@ from .views import (
     AddressRetrieveAPIView,
     AddressUpdateAPIView,
     AddressDeleteAPIView,
-    PaymentListAPIView,
-    PaymentCreateAPIView,
-    PaymentOptionsListAPIView,
+
 
 )
 
@@ -51,8 +49,4 @@ urlpatterns = [
         AddressDeleteAPIView.as_view(),
         name="address-delete-api-endpoint",
     ),
-    path("payment/",PaymentListAPIView.as_view(), name="payment-list-api-endpoint"),
-    path("payment/create/",PaymentCreateAPIView.as_view(), name="payment-create-api-endpoint"),
-    path("payment_options/",PaymentOptionsListAPIView.as_view(), name="payment-options-list-api-endpoint"),
-    
 ]
