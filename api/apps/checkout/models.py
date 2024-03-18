@@ -1,3 +1,4 @@
+
 from django.db import models
 from api.apps.common.models import BaseModel
 from api.apps.auth.models import CustomUser as User
@@ -18,22 +19,23 @@ class Address(BaseModel):
         return f'{self.city}, {self.state}, {self.country}'
 
 
-class PaymentMethodEnun(models.TextChoices):
-    CREDIT_CARD = 'credit_card'
-    DEBIT_CARD = 'debit_card'
-    PAYPAL = 'paypal'
-    STRIPE = 'stripe'
-    CASH_ON_DELIVERY = 'cash_on_delivery'
-    ESEWA = 'esewa'
+class PaymentOptions(BaseModel):
+    payment_method = models.CharField(max_length=255)
+    payment_description = models.TextField()
+    payment_image = models.ImageField(upload_to='media/payment_options/', null=True, blank=True)
+
+    def __str__(self):
+        return f'{self.payment_method}'
 
 class PaymentStatusEnun(models.TextChoices):
     PENDING = 'pending'
     COMPLETED = 'completed'
     CANCELLED = 'cancelled'
     FAILED = 'failed'
+    HOLD = 'hold'
     
 class Payment(BaseModel):
-    payment_method = models.CharField(max_length=255, choices=PaymentMethodEnun.choices)
+    payment_method = models.ForeignKey(PaymentOptions, on_delete=models.CASCADE)
     payment_status = models.CharField(max_length=255, choices=PaymentStatusEnun.choices, default=PaymentStatusEnun.PENDING)
     payment_date = models.DateField()
     payment_amount = models.DecimalField(max_digits=10, decimal_places=2)
@@ -46,8 +48,9 @@ class Payment(BaseModel):
 
 class Checkout(BaseModel):
     address = models.ForeignKey(Address, on_delete=models.CASCADE)
-    payment = models.ForeignKey(Payment, on_delete=models.CASCADE)
+    payment = models.ForeignKey(Payment, on_delete=models.CASCADE, null=True, blank=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    item = models.ForeignKey(Cart, on_delete=models.CASCADE , default=None)
+    items = models.ManyToManyField(Cart)
+
     def __str__(self):
-        return f'{self.address} - {self.payment} - {self.user}'
+        return f'{self.user} - {self.payment} - {self.address}'

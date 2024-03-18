@@ -1,25 +1,46 @@
+
 from rest_framework import serializers
-from .models import Checkout, Address
+from .models import Checkout, Address, Payment, PaymentOptions
 
 
 # here we change the status of the payment to completed and cart to CHECKEDOUT
 
+# this is the old serializer for single cart id
+# class CheckoutCreateSerializer(serializers.ModelSerializer):
+#     user = serializers.HiddenField(
+#         default=serializers.CurrentUserDefault()
+#     )
+#     class Meta:
+#         model = Checkout
+#         fields = [ "id", "item", "address", "payment", "user"]
+
+#     def create(self, validated_data):
+#         checkout = Checkout.objects.create(**validated_data)
+#         checkout.cart.status = 'CHECKEDOUT'
+#         checkout.cart.save()
+#         checkout.payment.status = 'COMPLETED'
+#         checkout.payment.save()
+#         return checkout
+
+
+# this is the new serializer for multiple cart ids
 class CheckoutCreateSerializer(serializers.ModelSerializer):
     user = serializers.HiddenField(
         default=serializers.CurrentUserDefault()
     )
     class Meta:
         model = Checkout
-        fields = [ "id", "item", "address", "payment", "user"]
+        fields = [ "id", "items", "address", "payment", "user"]
 
     def create(self, validated_data):
         checkout = Checkout.objects.create(**validated_data)
-        checkout.cart.status = 'CHECKEDOUT'
-        checkout.cart.save()
-        checkout.payment.status = 'COMPLETED'
+        for cart in checkout.items.all():
+            cart.status = 'CHECKEDOUT'
+            cart.save()
+        checkout.payment.payment_status = 'completed'
         checkout.payment.save()
         return checkout
-
+        
 class CheckoutSerializer(serializers.ModelSerializer):
     user = serializers.HiddenField(
         default=serializers.CurrentUserDefault()
@@ -48,6 +69,19 @@ class AddressSerializer(serializers.ModelSerializer):
     )
     class Meta:
         model = Address
+        fields = "__all__"
+
+class PaymentSerializer(serializers.ModelSerializer):
+    user = serializers.HiddenField(
+        default=serializers.CurrentUserDefault()
+    )
+    class Meta:
+        model = Payment
+        fields = "__all__"
+
+class PaymentOptionsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PaymentOptions
         fields = "__all__"
 
 # class AddressGetSerializer(serializers.ModelSerializer):
