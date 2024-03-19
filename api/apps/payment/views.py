@@ -6,14 +6,18 @@ from .serializers import PaymentSerializer, PaymentOptionsSerializer
 
 class PaymentListAPIView(generics.ListAPIView):
     serializer_class = PaymentSerializer
-    queryset = Payment.objects.all()
+    def get_queryset(self):
+        return Payment.objects.filter(user=self.request.user)
 
 class PaymentCreateAPIView(generics.CreateAPIView):
-    queryset = Payment.objects.all()
     serializer_class = PaymentSerializer
+
+    def get_queryset(self):
+        return Payment.objects.filter(user=self.request.user)
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
+
 class PaymentOptionsListAPIView(generics.ListAPIView):
     serializer_class = PaymentOptionsSerializer
     queryset = PaymentOptions.objects.all()
