@@ -18,6 +18,7 @@ class CartGetSerializer(serializers.ModelSerializer):
         fields = [ "id" , "product" , "quantity" ]
         
     def get_product(self, obj):
+        print(self.context.get('request').user)
         product = {
             'id': obj.product.id,
             'title': obj.product.title,

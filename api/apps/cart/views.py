@@ -7,15 +7,25 @@ from rest_framework.permissions import IsAuthenticated
 
 class CartListAPIView(generics.ListAPIView):
     serializer_class = CartGetSerializer
+<<<<<<< HEAD
     # queryset = Cart.objects.all()
 
     permission_classes = [IsAuthenticated]
+=======
+
+>>>>>>> b82ca752b26f6b75ace6406d59d204e9463ce776
     def get_queryset(self):
         return Cart.objects.filter(user=self.request.user)
     
 class CartCreateAPIView(generics.CreateAPIView):
+<<<<<<< HEAD
     # queryset = Cart.objects.all()
+=======
+    
+>>>>>>> b82ca752b26f6b75ace6406d59d204e9463ce776
     serializer_class = CartSerializer
+    def get_queryset(self):
+        return Cart.objects.filter(user=self.request.user)
 
     permission_classes = [IsAuthenticated]
     def get_queryset(self):
@@ -30,6 +40,8 @@ class CartCreateAPIView(generics.CreateAPIView):
 class CartRetrieveAPIView(generics.RetrieveAPIView):
     # queryset = Cart.objects.all()
     serializer_class = CartGetSerializer
+    def get_queryset(self):
+        return Cart.objects.filter(user=self.request.user)
 
     permission_classes = [IsAuthenticated]
     def get_queryset(self):
@@ -39,6 +51,8 @@ class CartRetrieveAPIView(generics.RetrieveAPIView):
 class CartUpdateAPIView(generics.UpdateAPIView):
     # queryset = Cart.objects.all()
     serializer_class = CartSerializer
+    def get_queryset(self):
+        return Cart.objects.filter(user=self.request.user)
 
     permission_classes = [IsAuthenticated]
     def get_queryset(self):

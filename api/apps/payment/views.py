@@ -19,6 +19,9 @@ class PaymentCreateAPIView(generics.CreateAPIView):
     def get_queryset(self):
         return Payment.objects.filter(user=self.request.user)
 
+    def get_queryset(self):
+        return Payment.objects.filter(user=self.request.user)
+
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
 

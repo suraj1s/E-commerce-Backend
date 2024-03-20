@@ -14,6 +14,8 @@ class OrderListAPIView(generics.ListAPIView):
 class OrderCreateAPIView(generics.CreateAPIView):
     # queryset = Order.objects.all()
     serializer_class = OrderSerializer
+    def get_queryset(self):
+        return Order.objects.filter(user=self.request.user)
 
     permission_classes = [IsAuthenticated]
     def get_queryset(self):
@@ -30,8 +32,10 @@ class OrderRetrieveAPIView(generics.RetrieveAPIView):
         return Order.objects.filter(user=self.request.user)
 
 class OrderUpdateAPIView(generics.UpdateAPIView):
-    queryset = Order.objects.all()
+    
     serializer_class = OrderSerializer
+    def get_queryset(self):
+        return Order.objects.filter(user=self.request.user)
 
     permission_classes = [IsAuthenticated]
     def get_queryset(self):
