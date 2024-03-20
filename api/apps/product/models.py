@@ -38,6 +38,5 @@ class Product(BaseModel):
         return self.title
 
 
-class Image(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+class Image(BaseModel):
     image_url = models.URLField(max_length=500 , blank=True , null=True , default="https://via.placeholder.com/150")
