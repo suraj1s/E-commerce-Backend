@@ -16,9 +16,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-l#sm8^ceq5*!x&#tutq)(yr9=trbs3bz!jzfm_0xic3e9%n2u!'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["e-commerce-backend-w4w2.onrender.com", "localhost:3000"]
 
 AUTH_USER_MODEL = "authentication.CustomUser"
 
