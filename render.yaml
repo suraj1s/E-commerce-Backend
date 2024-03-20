@@ -1,7 +1,7 @@
 databases:
-  - name: ecommerce-backend
+  - name: apidb
     plan: free
-    databaseName: ecommerce
+    databaseName: apidb
     user: suraj
 
 services:
