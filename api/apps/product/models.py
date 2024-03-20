@@ -1,6 +1,5 @@
 from django.db import models
 from api.apps.common.models import BaseModel
-import uuid
 
 sizes = (
     ('S', 'Small'),
@@ -39,6 +38,6 @@ class Product(BaseModel):
 
 
 class Image(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    uid = models.BigIntegerField(primary_key=True, auto_created=True, default=1, editable=False)
     image_url = models.URLField(blank=True, max_length=500, null=True)
     
