@@ -37,7 +37,6 @@ class Product(BaseModel):
         return self.title
 
 
-class Image(models.Model):
-    uid = models.BigIntegerField(primary_key=True, auto_created=True, default=1, editable=False)
+class Image(BaseModel):
     image_url = models.URLField(blank=True, max_length=500, null=True)
     
