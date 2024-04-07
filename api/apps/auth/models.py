@@ -10,4 +10,4 @@ class CustomUser(AbstractUser , BaseModel):
     )
     is_active = models.BooleanField(default=True)
     def __str__(self):
-        return self.username
+        return self.username 

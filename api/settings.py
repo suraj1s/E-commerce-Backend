@@ -2,7 +2,7 @@
 from pathlib import Path
 from datetime import timedelta
 import os
-import dj_database_url
+# import dj_database_url
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -16,10 +16,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-l#sm8^ceq5*!x&#tutq)(yr9=trbs3bz!jzfm_0xic3e9%n2u!'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ["e-commerce-backend-w4w2.onrender.com", "localhost:3000"]
-
+ALLOWED_HOSTS = ["e-commerce-backend-w4w2.onrender.com", "localhost"]
 AUTH_USER_MODEL = "authentication.CustomUser"
 
 
@@ -82,26 +81,29 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'api.wsgi.application'
 
-
-# # Database
-# # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-
-# Replace the SQLite DATABASES configuration with PostgreSQL:
 DATABASES = {
-    'default': dj_database_url.config(
-        # Replace this value with your local database's connection string.
-        default=os.environ.get("DATABASE_URL"),
-        conn_max_age=600
-    )
-}
+        "default": {"ENGINE": "django.db.backends.sqlite3", "NAME": BASE_DIR / "db.sqlite3"}
+    }
 
+    
+# Replace the SQLite DATABASES configuration with PostgreSQL:
+
+# # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
+# if os.environ.get("USE_POSTGRES") == "True":c
+#     DATABASES = {
+#         "default": {
+#             "ENGINE": "django.db.backends.postgresql_psycopg2",
+#             "NAME": env("POSTGRES_DB"),
+#             "USER": env("POSTGRES_USER"),
+#             "PASSWORD": env("POSTGRES_PASSWORD"),
+#             "HOST": env("POSTGRES_HOST"),
+#             "PORT": env("POSTGRES_PORT"),
+#         },
+#     }
+# else:
+#     DATABASES = {
+#         "default": {"ENGINE": "django.db.backends.sqlite3", "NAME": BASE_DIR / "db.sqlite3"}
+#     }
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
