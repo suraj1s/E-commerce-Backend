@@ -36,7 +36,8 @@ class Payment(BaseModel):
     payment_date = models.DateField( null=True, blank=True)
     # payment_date = models.DateField(auto_now_add=True)
     payment_amount = models.DecimalField(max_digits=10, decimal_places=2)
-    payment_reference = models.CharField(max_length=255)
+    payment_reference = models.CharField(max_length=255,null=True,blank=True)
+    pidx = models.CharField(null=True,blank=True,max_length=255)
     user = models.ForeignKey(User, on_delete=models.CASCADE )
 
 

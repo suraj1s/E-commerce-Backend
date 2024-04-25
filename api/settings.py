@@ -17,7 +17,7 @@ SECRET_KEY = 'django-insecure-l#sm8^ceq5*!x&#tutq)(yr9=trbs3bz!jzfm_0xic3e9%n2u!
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["e-commerce-backend-w4w2.onrender.com", "localhost"]
+ALLOWED_HOSTS = ["e-commerce-backend-w4w2.onrender.com", "localhost",'*']
 AUTH_USER_MODEL = "authentication.CustomUser"
 
 
