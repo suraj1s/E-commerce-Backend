@@ -19,6 +19,11 @@ class PaymentSerializer(serializers.ModelSerializer):
             payment.payment_status = 'incomplete'
             payment.payment_date = None
             payment.save()
+        
+        # print(payment.payment_method, "Khalti")
+        print(payment, "payment")
+        print(payment.payment_method , "payment method")
+        # if payment.payment_method == 'khalti':
         return payment
 
 class PaymentOptionsSerializer(serializers.ModelSerializer):
